@@ -2,7 +2,7 @@
 
 ## Introduction
 
-- This project demonstrates how to use the ML Platform for helping you train machine learning models, track experiments, save the models for future usage and deploy the models.
+- This project demonstrates how to use the ML Platform for helping you train machine learning models, track experiments, save the models for future usage(ex. deploy the models).
 
 ## Usage
 
