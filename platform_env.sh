@@ -26,6 +26,9 @@ MLFLOW_TENSORFLOW_MODEL_LOG=True
 MLFLOW_TENSORFLOW_AUTO_LOG=True
 MLFLOW_LOG_PARAMS=True
 
+# KerasTuner Environments.
+# ------------
+KERAS_TUNER_LOGS_DIR=logs/keras_tuner
 
 # Tensorboard Environments.
 # -------------

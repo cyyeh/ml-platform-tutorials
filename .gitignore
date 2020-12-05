@@ -6,4 +6,6 @@ venv
 *.csv
 logs/postgres_storage
 logs/tensorboard
+logs/keras_tuner
+artifacts/*
 data/cifar-10-batches-py

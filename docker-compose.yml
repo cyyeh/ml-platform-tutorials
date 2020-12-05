@@ -38,7 +38,7 @@ services:
     build:
       context: components/jupyterlab
       dockerfile: Dockerfile
-    image: chihyuyeh/ml-platform:jupyterlab-0.1.0
+    image: chihyuyeh/ml-platform:jupyterlab-0.2.0
     container_name: jupyterlab
     restart: always
     ports:
@@ -50,6 +50,7 @@ services:
         MLFLOW_TENSORFLOW_MODEL_LOG: ${MLFLOW_TENSORFLOW_MODEL_LOG}
         MLFLOW_TENSORFLOW_AUTO_LOG: ${MLFLOW_TENSORFLOW_AUTO_LOG}
         MLFLOW_LOG_PARAMS: ${MLFLOW_LOG_PARAMS}
+        KERAS_TUNER_LOGS_DIR: ${KERAS_TUNER_LOGS_DIR}
         TENSORBOARD_SCALAR_LOGS: ${TENSORBOARD_SCALAR_LOGS}
         TENSORBOARD_IMAGES_DISPLAY: ${TENSORBOARD_IMAGES_DISPLAY}
         TENSORBOARD_CONFUSION_MATRIX: ${TENSORBOARD_CONFUSION_MATRIX}
@@ -58,6 +59,7 @@ services:
       - ./${APP_DIR}/:${NOTEBOOK_WORKSPACE}/${APP_DIR}
       - ./${DATA_DIR}/:${NOTEBOOK_WORKSPACE}/${DATA_DIR}
       - ./${ARTIFACTS_DIR}/:/mlflow
+      - ./${KERAS_TUNER_LOGS_DIR}/:${NOTEBOOK_WORKSPACE}/${KERAS_TUNER_LOGS_DIR}
       - ./${TENSORBOARD_LOGS_DIR}/:${NOTEBOOK_WORKSPACE}/${TENSORBOARD_LOGS_DIR}
 
   tensorboard:
