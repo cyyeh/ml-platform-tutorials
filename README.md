@@ -6,6 +6,8 @@
 
 ## Usage
 
+- Install [`git-lfs`](https://git-lfs.github.com/) first
+- Clone the repository
 - Execute `make up` to run the project
   - To visit JupyterLab, type the following address on your favorite browser: `http://localhost:8888/`
   - To visit TensorBoard, type the following address on your favorite browser: `http://localhost:6006/`
