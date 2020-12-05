@@ -1,0 +1,74 @@
+version: '3'
+services:
+  postgres:
+    build:
+      context: components/postgres
+      dockerfile: Dockerfile
+    image: chihyuyeh/ml-platform:postgres-0.1.0
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./${POSTGRES_STORAGE}/:/var/lib/postgresql/data
+
+  mlflow:
+    build:
+      context: components/mlflow
+      dockerfile: Dockerfile
+    image: chihyuyeh/ml-platform:mlflow-0.1.0
+    container_name: mlflow
+    restart: always
+    expose:
+      - ${MLFLOW_EXPOSE_PORT}
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./${ARTIFACTS_DIR}/:/mlflow
+
+  jupyterlab:
+    build:
+      context: components/jupyterlab
+      dockerfile: Dockerfile
+    image: chihyuyeh/ml-platform:jupyterlab-0.1.0
+    container_name: jupyterlab
+    restart: always
+    ports:
+      - "8888:8888"
+    depends_on:
+      - mlflow
+    environment:
+        MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI}
+        MLFLOW_TENSORFLOW_MODEL_LOG: ${MLFLOW_TENSORFLOW_MODEL_LOG}
+        MLFLOW_TENSORFLOW_AUTO_LOG: ${MLFLOW_TENSORFLOW_AUTO_LOG}
+        MLFLOW_LOG_PARAMS: ${MLFLOW_LOG_PARAMS}
+        TENSORBOARD_SCALAR_LOGS: ${TENSORBOARD_SCALAR_LOGS}
+        TENSORBOARD_IMAGES_DISPLAY: ${TENSORBOARD_IMAGES_DISPLAY}
+        TENSORBOARD_CONFUSION_MATRIX: ${TENSORBOARD_CONFUSION_MATRIX}
+        TENSORBOARD_LOGS_DIR: ${TENSORBOARD_LOGS_DIR}
+    volumes:
+      - ./${APP_DIR}/:${NOTEBOOK_WORKSPACE}/${APP_DIR}
+      - ./${DATA_DIR}/:${NOTEBOOK_WORKSPACE}/${DATA_DIR}
+      - ./${ARTIFACTS_DIR}/:/mlflow
+      - ./${TENSORBOARD_LOGS_DIR}/:${NOTEBOOK_WORKSPACE}/${TENSORBOARD_LOGS_DIR}
+
+  tensorboard:
+    build:
+      context: components/tensorboard
+      dockerfile: Dockerfile
+    image: chihyuyeh/ml-platform:tensorboard-0.1.0
+    container_name: tensorboard
+    restart: always
+    volumes:
+      - ./${TENSORBOARD_LOGS_DIR}/:/${TENSORBOARD_LOGS_DIR}/
+    ports:
+      - "6006:6006"
+    command: tensorboard --bind_all --port 6006 --logdir=/${TENSORBOARD_LOGS_DIR}/
