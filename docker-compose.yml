@@ -38,7 +38,7 @@ services:
     build:
       context: components/jupyterlab
       dockerfile: Dockerfile
-    image: chihyuyeh/ml-platform:jupyterlab-0.2.0
+    image: chihyuyeh/ml-platform:jupyterlab-0.3.0
     container_name: jupyterlab
     restart: always
     ports:
