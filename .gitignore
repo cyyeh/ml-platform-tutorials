@@ -6,3 +6,4 @@ venv
 *.csv
 logs/postgres_storage
 logs/tensorboard
+data/cifar-10-batches-py
