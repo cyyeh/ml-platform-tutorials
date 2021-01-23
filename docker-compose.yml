@@ -1,9 +1,6 @@
 version: '3'
 services:
   postgres:
-    build:
-      context: components/postgres
-      dockerfile: Dockerfile
     image: chihyuyeh/ml-platform:postgres-0.1.0
     container_name: postgres
     restart: always
@@ -16,9 +13,6 @@ services:
       - ./${POSTGRES_STORAGE}/:/var/lib/postgresql/data
 
   mlflow:
-    build:
-      context: components/mlflow
-      dockerfile: Dockerfile
     image: chihyuyeh/ml-platform:mlflow-0.1.0
     container_name: mlflow
     restart: always
@@ -35,10 +29,7 @@ services:
       - ./${ARTIFACTS_DIR}/:/mlflow
 
   jupyterlab:
-    build:
-      context: components/jupyterlab
-      dockerfile: Dockerfile
-    image: chihyuyeh/ml-platform:jupyterlab-0.3.0
+    image: chihyuyeh/ml-platform:jupyterlab-0.4.0
     container_name: jupyterlab
     restart: always
     ports:
@@ -63,9 +54,6 @@ services:
       - ./${TENSORBOARD_LOGS_DIR}/:${NOTEBOOK_WORKSPACE}/${TENSORBOARD_LOGS_DIR}
 
   tensorboard:
-    build:
-      context: components/tensorboard
-      dockerfile: Dockerfile
     image: chihyuyeh/ml-platform:tensorboard-0.1.0
     container_name: tensorboard
     restart: always

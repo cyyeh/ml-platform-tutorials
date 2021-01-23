@@ -11,8 +11,6 @@ COMMAND=$1
 . ./platform_env.sh
 
 case $COMMAND in
-    build)
-        docker-compose build;;
     up)
         docker-compose pull && docker-compose up -d;;
     stop)

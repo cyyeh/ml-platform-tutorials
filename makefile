@@ -1,5 +1,3 @@
-build:
-	./platform.sh build
 up:
 	./platform.sh up
 stop:
